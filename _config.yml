@@ -1,0 +1,44 @@
+# Site settings
+title: AtomicGain
+description: Technical Biscuits, Short log for any things I'm interested in
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://www.atomicgain.com" # the base hostname & protocol for your site e.g. http://www.google.com
+
+# User settings
+username: Wilmos
+user_description: Wheat grass
+email: yyghdfz@163.com
+twitter_username: wilmosfang
+github_username:  wilmosfang
+gplus_username:  wilmosfang
+disqus_username: wilmosfang
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+
+
+# html minify
+compress_html:
+  clippings: all
+  comments: all
+  endings: []
+  profile: false
+
+# Links to include in menu navigation
+# For external links add external: true
+links:
+  - title: Home
+    url: /
+  - title: Series
+    url: /series
+#  - title: Category
+#    url: /category
+  - title: Tags
+    url: /tags
+  - title: About Me
+    url: /about
+
+# exclude my node related stuff
+exclude: ['package.json', 'src', 'node_modules']
