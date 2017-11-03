@@ -12,8 +12,11 @@ tags:
 - c
 categories:
 - d
-- e 
+- e
 - f
-twitter_text: 
+twitter_text:
 introduction: "test 1 2 3"
 ---
+
+
+# this is a test post
