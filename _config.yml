@@ -2,7 +2,7 @@
 title: AtomicGain
 description: Technical Biscuits, Short log for any things I'm interested in
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://www.atomicgain.com" # the base hostname & protocol for your site e.g. http://www.google.com
+siteurl: "http://www.atomicgain.com" # the base hostname & protocol for your site e.g. http://www.google.com
 
 # User settings
 username: Doner
