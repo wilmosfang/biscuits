@@ -11,7 +11,7 @@ tags:
 - b
 - c
 - e
-- f 
+- f
 categories:
 - d
 - e
