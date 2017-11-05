@@ -10,6 +10,8 @@ tags:
 - a
 - b
 - c
+- e
+- f 
 categories:
 - d
 - e
