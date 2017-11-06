@@ -13,6 +13,13 @@ github_username:  wilmosfang
 gplus_username:  wilmosfang
 disqus_username: wilmosfang
 
+
+# analytics settings
+#baidu_tongji_id: 6215ece267ead9b404f056b769dac482
+baidu_tongji_id: 3fc4e36a99510a56421587ebf4217402
+#google_analytics_id: UA-74789250-1 
+google_analytics_id: UA-74789250-2
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
