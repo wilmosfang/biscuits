@@ -4,15 +4,15 @@ title: "Install Tengine"
 date: 2017-11-07 15:41:10
 image: '/assets/img/'
 description: Tengine 的安装方法
-main-class: service
+main-class: nginx
 color: '#EB7728'
 tags:
  - tengine
  - nginx
 categories:
  - nginx
-twitter_text: tengine install simple process
-introduction: tengine install method
+twitter_text: Tengine install simple process
+introduction: Tengine install method
 ---
 
 
