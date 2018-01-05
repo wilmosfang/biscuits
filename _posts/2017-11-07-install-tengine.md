@@ -5,7 +5,7 @@ date: 2017-11-07 15:41:10
 image: '/assets/img/'
 description: Tengine 的安装方法
 main-class: nginx
-color: '#EB7728'
+color: '#7AAB13'
 tags:
  - tengine
  - nginx
