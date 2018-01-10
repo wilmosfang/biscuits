@@ -90,7 +90,7 @@ Saving to: ‘rstudio-1.1.383-x86_64.rpm’
 [root@much Downloads]
 ~~~
 
-## 检验源码包
+## 检验安装包
 
 
 ~~~bash
