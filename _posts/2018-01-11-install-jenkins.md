@@ -27,7 +27,7 @@ introduction: 'installation method of Jenkins'
 >
 >The leading open source automation server, Jenkins provides hundreds of plugins to support building, deploying and automating any project.
 
-**[Jenkins][jenkins]** 与 **k8s** 还有 **Docker** 常常放在一起构建持续集成系统
+**[Jenkins][jenkins]** 与 **k8s** 还有 **Gitlab** 常常放在一起构建持续集成系统
 
 下面分享一下 **[Jenkins][jenkins]** 的基础安装操作
 
