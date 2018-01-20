@@ -397,20 +397,9 @@ Hint: Some lines were ellipsized, use -l to show in full.
 **[Jenkins 的安装地址][jenkins_dl]**
 
 
-## 安装
-
-~~~
-[root@much Downloads]# rpm -ivh rstudio-1.1.383-x86_64.rpm
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:rstudio-1.1.383-1                ################################# [100%]
-[root@much Downloads]#
-~~~
-
-
 ## 附加信息
 
-* Jenkins will be launched as a daemon on startup. See /etc/init.d/jenkins for more details.
+* **Jenkins** 会作为一个守护进程在后台启动. **/etc/init.d/jenkins** 里有详细信息.
 
 ~~~
 [root@much ~]# cat /etc/init.d/jenkins
@@ -587,7 +576,7 @@ exit $RETVAL
 ~~~
 
 
-* The 'jenkins' user is created to run this service. If you change this to a different user via the config file, you must change the owner of /var/log/jenkins, /var/lib/jenkins, and /var/cache/jenkins.
+* 服务是以 **jenkins** 的用户身份运行的 . 如果要在配置文件中改成另一个用户身份　, 必须同时改变以下几个文件的所有者 **/var/log/jenkins, /var/lib/jenkins, and /var/cache/jenkins**.
 
 ~~~
 [root@much ~]# tail -n5 /etc/passwd
@@ -624,7 +613,7 @@ drwxr-xr-x 10 jenkins jenkins 4096 1月  11 23:57 war
 [root@much ~]#
 ~~~
 
-* Log file will be placed in /var/log/jenkins/jenkins.log. Check this file if you are troubleshooting Jenkins.
+* 日志文件的位置为 /var/log/jenkins/jenkins.log　可以使用这个文件来跟踪进程状态.
 
 ~~~
 [root@much ~]# tail /var/log/jenkins/jenkins.log
@@ -643,8 +632,7 @@ This may also be found at: /var/lib/jenkins/secrets/initialAdminPassword
 [root@much ~]#
 ~~~
 
-* /etc/sysconfig/jenkins will capture configuration parameters for the launch.
-By default, Jenkins listen on port 8080. Access this port with your browser to start configuration.  Note that the built-in firewall may have to be opened to access this port from other computers.  (See http://www.cyberciti.biz/faq/disable-linux-firewall-under-centos-rhel-fedora/ for instructions how to disable the firewall permanently)
+* /etc/sysconfig/jenkins 是进程的启动配置文件.　默认情况下服务监听在　8080　端口. 通过访问此端口进行服务配置.  
 
 ~~~
 [root@much ~]# service  jenkins  start
@@ -664,7 +652,7 @@ tcp6       0      0 :::22                   :::*                    LISTEN
 [root@much ~]#
 ~~~
 
-* A Jenkins RPM repository is added in /etc/yum.repos.d/jenkins.repo
+* **Jenkins** 的 RPM 库为 /etc/yum.repos.d/jenkins.repo
 
 ~~~
 [root@much ~]# cat /etc/yum.repos.d/jenkins.repo
@@ -674,6 +662,9 @@ baseurl=http://pkg.jenkins.io/redhat-stable
 gpgcheck=1
 [root@much ~]#
 ~~~
+
+>**Note:** that the built-in firewall may have to be opened to access this port from other computers.  (See http://www.cyberciti.biz/faq/disable-linux-firewall-under-centos-rhel-fedora/ for instructions how to disable the firewall permanently)
+
 
 ## 打开防火墙
 
@@ -708,7 +699,7 @@ firewall-cmd --reload
 
 出现登录界面
 
-![jenkins](/assets/img/jenkins/jenkins.png)
+![jenkins](/assets/img/jenkins/jenkins1.png)
 
 新版本中对安全有所加强
 
