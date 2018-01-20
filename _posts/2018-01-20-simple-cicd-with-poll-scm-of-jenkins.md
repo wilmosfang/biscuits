@@ -266,13 +266,15 @@ Finished: SUCCESS
 
 每触发一次构建都会有一个闪烁的任务进度显示在左边的状态栏中
 
-![jenkins](/assets/img/jenkins/jenkins15.png)
+![jenkins](/assets/img/jenkins/jenkins16.png)
+
+运行过程中的日志是会实时反馈到 **Console Output** 中的
+
+![jenkins](/assets/img/jenkins/jenkins17.png)
 
 可以看到历史任务的分布图与耗时趋势图
 
-
-
-
+![jenkins](/assets/img/jenkins/jenkins18.png)
 
 
 ---
