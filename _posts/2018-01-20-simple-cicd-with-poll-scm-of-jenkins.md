@@ -123,7 +123,7 @@ introduction: 'Simple CI/CD method'
 
 选择 **Git** (因为我的项目在GitHub上)
 
-然后指定正确的 **Repository URL** 和　**Branch Specifier (blank for 'any')** 分支 (因为我的Web只发布于 gh-pages,所以我只需要让其检查此分支的变化就可以了)
+然后指定正确的 **Repository URL** 和 **Branch Specifier (blank for 'any')** 分支 (因为我的 Web 只发布于 gh-pages, 所以我只需要让其检查此分支的变化就可以了)
 
 ## 配置触发器
 
@@ -145,21 +145,24 @@ introduction: 'Simple CI/CD method'
 
 两者都会周期性地调动，但是 **Poll SCM** 只在检查到源码版本有变化的时候才会执行后面的 build 操作，而 **Build periodically** 是不论源码版本是否有变化都会执行后面的 build 操作
 
-如果源代码在公网平台上（比如github），那这两者与其它触发机制有什么不同呢
+如果源代码在公网平台上 (比如 github)，那这两者与其它触发机制有什么不同呢
 
 这两者由于是主动发起的，所以可以没有公网IP而隐藏在 NAT 后面，只要有可以主动访问公网的权限就可以，而其它方式(比如 GitHub hook trigger for GITScm polling),就需要提供一个公网 IP 或从公网 IP 到此 Jenkins 服务端口的 DNAT 映射,无疑后者的环境要求要高一些，但是前者的开销要大一点，因为毕竟事件触发的响应式模型更加有效和节省系统资源
 
 ## 配置执行内容
 
-**Build** 作为整个构建过程中最核心的一步，里面定义了所有要作的操作内容
+**Build** 作为整个构建过程中最核心的一步，里面定义了所有要做的事情
 
 这里选择 **Excuete shell scrip on remote host using ssh**
 
-**SSH site** 中选择在系统配置里设定好的 host
+![jenkins](/assets/img/jenkins/jenkins13.png)
+
+
+**SSH site** 中选择在系统配置里设定好的连接串
 
 **Command** 中定义脚本内容
 
-由于我是使用的 jekyll 来构建 web 所以可以动态发布，并没额外的build步骤，这一步由jekyll代劳了，我只需要更新发布代码就可以了
+由于我是使用的 jekyll 来构建 web 的，所以可以动态发布，并没额外的 build 步骤，这一步由 jekyll 代劳了，我只需要更新发布代码就可以了
 
 ~~~
 cd  /home/git/git/biscuits/
@@ -168,14 +171,97 @@ echo `date` > /tmp/date
 cat /tmp/date
 ~~~
 
-上面两步是进入代码根目录，下拉最新代码到本地，下面两步是记录一个更新时间戳
+前面两步是进入代码根目录，下拉最新代码到本地，后面两步是记录一个更新的时间戳到 tmp 目录
 
 
 ## 提交变更触发发布
 
-~~~
+从本地 commit 完代码 push 到远程库后，远程仓库的代码版本就会发生变化
+
+等每两分钟的 pollSCM 检查后，发现远程代码版本发生了变化，就会触发一次 build 的过程　
+
+![jenkins](/assets/img/jenkins/jenkins14.png)
+
+
+## 日志输出
+
+可以点击查看此次构建的 **Console Output**
+
+![jenkins](/assets/img/jenkins/jenkins15.png)
+
+
+**Console Output**
 
 ~~~
+Console Output
+Started by an SCM change
+Building in workspace /var/lib/jenkins/workspace/blog_cicd_test
+Cloning the remote Git repository
+Cloning repository https://github.com/wilmosfang/biscuits.git
+ > git init /var/lib/jenkins/workspace/blog_cicd_test # timeout=10
+Fetching upstream changes from https://github.com/wilmosfang/biscuits.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/wilmosfang/biscuits.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/wilmosfang/biscuits.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/wilmosfang/biscuits.git # timeout=10
+Fetching upstream changes from https://github.com/wilmosfang/biscuits.git
+ > git fetch --tags --progress https://github.com/wilmosfang/biscuits.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/gh-pages^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/gh-pages^{commit} # timeout=10
+Checking out Revision 2457bdb4a2ed540109acf164d9974519a5ec43b6 (refs/remotes/origin/gh-pages)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 2457bdb4a2ed540109acf164d9974519a5ec43b6
+Commit message: "add  _posts/2018-01-20-simple-cicd-with-poll-scm-of-jenkins.md"
+ > git rev-list --no-walk 8b54a92f57c6df0bbef8142887192abe35e646c2 # timeout=10
+[SSH] script:
+
+cd  /home/git/git/biscuits/
+git pull
+echo `date` > /tmp/date
+cat /tmp/date
+
+
+[SSH] executing...
+From github.com:wilmosfang/biscuits
+   8b54a92..2457bdb  gh-pages   -> origin/gh-pages
+Updating 8b54a92..2457bdb
+Fast-forward
+ ...8-01-20-simple-cicd-with-poll-scm-of-jenkins.md | 196 +++++++++++++++++++++
+ _posts/2018-01-20-upgrade-jenkins.md               |   7 +-
+ assets/img/jenkins/jenkins10.png                   | Bin 0 -> 121689 bytes
+ assets/img/jenkins/jenkins11.png                   | Bin 0 -> 83667 bytes
+ assets/img/jenkins/jenkins12.png                   | Bin 0 -> 95810 bytes
+ assets/img/jenkins/jenkins13.png                   | Bin 0 -> 70812 bytes
+ assets/img/jenkins/jenkins8.png                    | Bin 0 -> 87137 bytes
+ assets/img/jenkins/jenkins9.png                    | Bin 0 -> 68035 bytes
+ 8 files changed, 201 insertions(+), 2 deletions(-)
+ create mode 100644 _posts/2018-01-20-simple-cicd-with-poll-scm-of-jenkins.md
+ create mode 100644 assets/img/jenkins/jenkins10.png
+ create mode 100644 assets/img/jenkins/jenkins11.png
+ create mode 100644 assets/img/jenkins/jenkins12.png
+ create mode 100644 assets/img/jenkins/jenkins13.png
+ create mode 100644 assets/img/jenkins/jenkins8.png
+ create mode 100644 assets/img/jenkins/jenkins9.png
+Sun Jan 21 00:28:23 CST 2018
+
+[SSH] completed
+[SSH] exit-status: 0
+
+Started calculate disk usage of build
+Finished Calculation of disk usage of build in 0 seconds
+Started calculate disk usage of workspace
+Finished Calculation of disk usage of workspace in 0 seconds
+Finished: SUCCESS
+~~~
+
+从日志中可以看到整个构建过程的详细输出与返回状态，便于进行 debug
+
+构建与发布成功后可以直接到网页中查看最终效果
+
+不难想像，再集成自动测试的若干步骤后，开发人员与价值交付间最终会缩减成了一个 commit
+
+
 
 
 
@@ -183,9 +269,11 @@ cat /tmp/date
 
 # 总结
 
-因为 Jenkins 被打成了一个 war 包，并且所有的配置与代码都进行了解耦，所以升级过程特别简单
+Jenkins 非常注重管道(Pipeline)的概念，这篇文档以最简洁的方式演示了管道的过程
 
-简而言之就是只用替换掉 war 包，其它都不变
+从开发，到 commit,到 push, 到检查更新，到触发操作，(到测试),到构建，到发布，到检验就是一个完整的管道流
+
+根据实际项目中的具体情况，其中步骤或多或少，但这是一个很有效的思路，将价值交付的过程管道化，并且将人的注意力节省下来，用来最有意义的部分
 
 * TOC
 {:toc}
