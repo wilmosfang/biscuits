@@ -94,7 +94,9 @@ introduction: 'upgrade method of Jenkins'
 
 ## 更新日志　
 
-通过 [变更日志][changelog] 我们可以看到新版本有哪些变更
+通过 **[变更日志][changelog]** 我们可以看到新版本有哪些变更
+
+也可以通过 **[升级指导][upgrade_guide]** 来看看官方的建议
 
 
 ## 下载更新版本
@@ -112,7 +114,7 @@ introduction: 'upgrade method of Jenkins'
 
 ![jenkins](/assets/img/jenkins/jenkins4.png)
 
-[主页]－＞[Manage Jenkins]－＞[System Information]
+**[主页]->[Manage Jenkins]->[System Information]**
 
 ![jenkins](/assets/img/jenkins/jenkins5.png)
 
@@ -219,5 +221,6 @@ Hint: Some lines were ellipsized, use -l to show in full.
 ---
 
 [jenkins]:https://jenkins.io/
+[upgrade_guide]:https://jenkins.io/doc/upgrade-guide/
 [changelog]:https://jenkins.io/changelog-stable/
 [jenkins_dl]:https://pkg.jenkins.io/redhat-stable/
