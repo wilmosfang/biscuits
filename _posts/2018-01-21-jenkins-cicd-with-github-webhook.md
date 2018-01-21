@@ -114,7 +114,7 @@ introduction: 'simple CI/CD with webhook'
 ## 创建密钥对
 
 
-**Credentials -> System -> Global credentials (unrestricted) -> Add Credentials **
+**Credentials -> System -> Global credentials (unrestricted) -> Add Credentials**
 
 
 ![jenkins](/assets/img/jenkins/jenkins24.png)
@@ -157,7 +157,7 @@ introduction: 'simple CI/CD with webhook'
 
 ![jenkins](/assets/img/jenkins/jenkins27.png)
 
-**New Item -> Freestyle Project -> OK **
+**New Item -> Freestyle Project -> OK**
 
 **Enter an item name** 下输入项目名
 
@@ -214,6 +214,7 @@ git pull
 
 ![jenkins](/assets/img/jenkins/jenkins31.png)
 
+在提交代码后，左下角会自动产生一个任务进度条，显示当前的构建进度和状态
 
 ## 日志输出
 
@@ -225,9 +226,75 @@ git pull
 **Console Output**
 
 ~~~
+Console Output
+Started by GitHub push by wilmosfang
+Building in workspace /var/lib/jenkins/workspace/github_webhook_test
+Cloning the remote Git repository
+Cloning repository https://github.com/wilmosfang/biscuits.git
+ > git init /var/lib/jenkins/workspace/github_webhook_test # timeout=10
+Fetching upstream changes from https://github.com/wilmosfang/biscuits.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/wilmosfang/biscuits.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/wilmosfang/biscuits.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/wilmosfang/biscuits.git # timeout=10
+Fetching upstream changes from https://github.com/wilmosfang/biscuits.git
+ > git fetch --tags --progress https://github.com/wilmosfang/biscuits.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/gh-pages^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/gh-pages^{commit} # timeout=10
+Checking out Revision 0d7d73a63ba76c6d36177132594967c4b2992016 (refs/remotes/origin/gh-pages)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 0d7d73a63ba76c6d36177132594967c4b2992016
+Commit message: "add  2018-01-21-jenkins-cicd-with-github-webhook"
+First time build. Skipping changelog.
+[SSH] script:
+
+cd ~/git/biscuits/
+git pull
+
+[SSH] executing...
+From github.com:wilmosfang/biscuits
+   952a9ac..0d7d73a  gh-pages   -> origin/gh-pages
+Updating 952a9ac..0d7d73a
+Fast-forward
+ .../2018-01-21-jenkins-cicd-with-github-webhook.md | 254 +++++++++++++++++++++
+ assets/css/main.css                                |   2 +-
+ assets/img/jenkins/jenkins19.png                   | Bin 0 -> 164709 bytes
+ assets/img/jenkins/jenkins20.png                   | Bin 0 -> 119027 bytes
+ assets/img/jenkins/jenkins21.png                   | Bin 0 -> 126164 bytes
+ assets/img/jenkins/jenkins22.png                   | Bin 0 -> 112304 bytes
+ assets/img/jenkins/jenkins23.png                   | Bin 0 -> 120453 bytes
+ assets/img/jenkins/jenkins24.png                   | Bin 0 -> 82907 bytes
+ assets/img/jenkins/jenkins25.png                   | Bin 0 -> 89182 bytes
+ assets/img/jenkins/jenkins26.png                   | Bin 0 -> 67115 bytes
+ assets/img/jenkins/jenkins27.png                   | Bin 0 -> 103769 bytes
+ assets/img/jenkins/jenkins28.png                   | Bin 0 -> 78133 bytes
+ assets/img/jenkins/jenkins29.png                   | Bin 0 -> 70974 bytes
+ assets/img/jenkins/jenkins30.png                   | Bin 0 -> 61959 bytes
+ category/jenkins.html                              |   2 +-
+ src/styl/_theme-colors.styl                        |   2 +-
+ 16 files changed, 257 insertions(+), 3 deletions(-)
+ create mode 100644 _posts/2018-01-21-jenkins-cicd-with-github-webhook.md
+ create mode 100644 assets/img/jenkins/jenkins19.png
+ create mode 100644 assets/img/jenkins/jenkins20.png
+ create mode 100644 assets/img/jenkins/jenkins21.png
+ create mode 100644 assets/img/jenkins/jenkins22.png
+ create mode 100644 assets/img/jenkins/jenkins23.png
+ create mode 100644 assets/img/jenkins/jenkins24.png
+ create mode 100644 assets/img/jenkins/jenkins25.png
+ create mode 100644 assets/img/jenkins/jenkins26.png
+ create mode 100644 assets/img/jenkins/jenkins27.png
+ create mode 100644 assets/img/jenkins/jenkins28.png
+ create mode 100644 assets/img/jenkins/jenkins29.png
+ create mode 100644 assets/img/jenkins/jenkins30.png
+
+[SSH] completed
+[SSH] exit-status: 0
+
+Finished: SUCCESS
 ~~~
 
-从日志中可以看到整个构建过程的详细输出与返回状态，便于进行 debug
+从日志中可以看到整个构建过程的详细输出与返回状态，便于 debug
 
 构建与发布成功后可以直接到网页中查看最终效果
 
