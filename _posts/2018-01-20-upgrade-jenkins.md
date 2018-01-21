@@ -5,7 +5,7 @@ date: 2018-01-20 09:11:34
 image: '/assets/img/'
 description: 'Jenkins 的升级方法'
 main-class: 'jenkins'
-color: '#1077ad'
+color: '#4799d6'
 tags:
  - jenkins
 categories:
@@ -130,7 +130,8 @@ introduction: 'upgrade method of Jenkins'
 
 然后在没有运行任务的情况下安全地停止 Jenkins 服务
 
-~~~
+
+{% highlight shell %}
 [root@much tmp]# ps faux | grep jenkins  -i
 root      3269  0.0  0.0 112648  1028 pts/0    S+   18:03   0:00  |       \_ grep --color=auto jenkins -i
 jenkins   1630  2.7 17.6 3720188 714756 ?      Ssl  16:36   2:24 /etc/alternatives/java -Djava.awt.headless=true -DJENKINS_HOME=/var/lib/jenkins -jar /usr/lib/jenkins/jenkins.war --logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war --httpPort=8080 --debug=5 --handlerCountMax=100 --handlerCountMaxIdle=20
@@ -152,7 +153,9 @@ jenkins   1630  2.7 17.6 3720188 714756 ?      Ssl  16:36   2:24 /etc/alternativ
 1月 20 18:03:47 much systemd[1]: Stopped LSB: Jenkins Automation Server.
 Hint: Some lines were ellipsized, use -l to show in full.
 [root@much tmp]#
-~~~
+{% endhighlight %}
+
+
 
 ## 备份和替换 WAR
 

@@ -67,13 +67,14 @@ introduction: 'simple CI/CD with webhook'
 
 这里提供两种查本地出回 IP 的方法
 
-~~~
+{% highlight bash %}
 [root@ci ~]# curl  ifconfig.me
 119.28.xx.xx
 [root@ci ~]# curl http://members.3322.org/dyndns/getip  
 119.28.xx.xx
 [root@ci ~]#
-~~~
+{% endhighlight %}
+
 
 当然如果不嫌麻烦，也可以直接登录控制台查看
 
@@ -198,10 +199,10 @@ Jenkins 监听到这个请求后就会触发构建的过程，相较于周期性
 
 由于我是使用的 jekyll 来构建 web 的，所以可以动态发布，并没额外的 build 步骤，这一步由 jekyll 代劳了，我只需要更新发布代码就可以了
 
-~~~
+{% highlight bash %}
 cd  /home/git/git/biscuits/
 git pull
-~~~
+{% endhighlight %}
 
 这两步是进入代码根目录，下拉最新代码到本地
 
@@ -225,7 +226,7 @@ git pull
 
 **Console Output**
 
-~~~
+{% highlight bash %}
 Console Output
 Started by GitHub push by wilmosfang
 Building in workspace /var/lib/jenkins/workspace/github_webhook_test
@@ -292,7 +293,7 @@ Fast-forward
 [SSH] exit-status: 0
 
 Finished: SUCCESS
-~~~
+{% endhighlight %}
 
 从日志中可以看到整个构建过程的详细输出与返回状态，便于 debug
 
