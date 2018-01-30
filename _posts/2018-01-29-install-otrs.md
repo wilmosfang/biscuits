@@ -8,6 +8,8 @@ main-class: otrs
 color: '66b2c1'
 tags:
  - otrs
+ - perl
+ - mysql
 categories:
  - otrs
 twitter_text: 'simple process of Otrs installation'
@@ -22,7 +24,7 @@ introduction: 'installation method of Otrs'
 
 >OTRS is one of the most flexible web-based ticketing systems used for Customer Service, Help Desk, IT Service Management. With a fast implementation and easy customization to your needs it helps you reducing costs and increasing the efficiency and transparency of your business communication.  
 
-使用工单来对接请求与服务，跟踪问题，管理事务，协调人力是一种高效的组织方式
+使用工单来对接请求服务，跟踪问题，管理事务，协调人力是一种高效的组织方式
 
 这里分享一下 **[Otrs][otrs]** 的安装方法
 
@@ -86,7 +88,7 @@ fd11a980d5ca7b09681f10ef7091890e  otrs-6.0.4-03.noarch.rpm
 
 **[Otrs的下载地址][otrs_dl]**
 
-## 禁用SELinux
+## 禁用 SELinux
 
 ~~~
 [root@much otrs]# cat /etc/selinux/config
@@ -110,7 +112,7 @@ Disabled
 [root@much otrs]#
 ~~~
 
-## 安装mysql
+## 安装 mysql
 
 ### 安装 mysql 仓库
 
