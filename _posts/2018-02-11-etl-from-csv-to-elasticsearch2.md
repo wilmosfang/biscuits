@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "ETL from CSV to Elasticsearch"
-date: 2018-02-09 15:09:05
+title: "ETL CSV to Elasticsearch"
+date: 2018-02-11 09:29:39
 image: '/assets/img/'
-description: '从 CSV 导数据到 Elasticsearch'
+description: '使用 es client API 从 CSV 导数据到 Elasticsearch'
 main-class: python
 color: '#265277'
 tags:
@@ -12,7 +12,7 @@ tags:
  - etl
 categories:
  - python
-twitter_text: 'import data from CSV to Elasticsearch'
+twitter_text: 'import data from CSV to Elasticsearch with es client API'
 introduction: 'python ETL from CSV to Elasticsearch'
 ---
 
@@ -27,9 +27,11 @@ introduction: 'python ETL from CSV to Elasticsearch'
 
 对于第一种方式，只要定义好字段名，指定输入源文件，相对简单，但定制空间比较受 logstash 的功能约束
 
-对于第二种方式，相对灵活，但是更复杂一点，需要借助各种库 API，也要理清数据抽取，变换处理与导入的逻辑流程
+对于第二种方式，相对灵活，但是更复杂一点，需要借助各种库，也要理清数据抽取，变换处理与导入的逻辑流程
 
-这里演示一下如何傅用 python 来将 CSV 导出到 Elasticsearch
+前一篇使用 helpers.bulk API 实现了 CSV 文档的批量导入
+
+这里演示一下如何傅用 creat API 来将 CSV 导出到 Elasticsearch
 
 > **Tip:** 需要借助 **Elasticsearch** 的 python 客户端
 
@@ -195,8 +197,8 @@ green open .kibana FEw09koKTymzBRmFlyCThA 1 0 4 0 20kb 20kb
 ## 编写脚本
 
 ~~~
-[root@much sf_script]# vim csv2es.py
-[root@much sf_script]# cat csv2es.py
+[root@much sf_script]# vim csv2es2.py
+[root@much sf_script]# cat csv2es2.py
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -204,9 +206,9 @@ green open .kibana FEw09koKTymzBRmFlyCThA 1 0 4 0 20kb 20kb
 import csv
 import sys
 import os
+import uuid
 from optparse import OptionParser
 from elasticsearch import Elasticsearch
-from elasticsearch import helpers
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -246,19 +248,16 @@ def to_utf8(record):
     return record
 
 def etl_csv_to_es(indexName,typeName,csvFile):
-    actions = []
-    count = 0
+    count=0
     for row in csv.DictReader(open(csvFile,'rb')):
-        action = {"_index":indexName,"_type":typeName,"_source":to_utf8(row)}
-        actions.append(action)
+        es.create(index=indexName,doc_type=typeName,id=str(uuid.uuid4()),body=to_utf8(row))
         count += 1
-    helpers.bulk(es,actions)
     es.indices.flush(index=[indexName])
     return (True,count)
 
 #main
 if __name__ == "__main__":
-    (res,num) = etl_csv_to_es(options.index,options.dtype,options.csv)
+    res,num = etl_csv_to_es(options.index,options.dtype,options.csv)
     if res:
         print "%d items import secussfully"%num
     else:
@@ -327,8 +326,8 @@ x,y,z,p,q
 ## 运行脚本
 
 ~~~
-[root@much sf_script]# ./csv2es.py -h
-Usage: csv2es.py <-i index> <-t type> [options] arg
+[root@much sf_script]# ./csv2es2.py -h
+Usage: csv2es2.py <-i index> <-t type> [options] arg
 
 Options:
   -h, --help            show this help message and exit
@@ -343,7 +342,7 @@ Options:
   -u USER, --user=USER  the user of elasticsearch
   -p PASSWORD, --password=PASSWORD
                         the password of the elasticsearch user
-[root@much sf_script]# ./csv2es.py -i indextest -t typetest -f y.csv
+[root@much sf_script]# ./csv2es2.py -i indextest -t typetest -f y.csv
 49 items import secussfully
 [root@much sf_script]#
 ~~~
@@ -357,17 +356,62 @@ green  open .kibana   FEw09koKTymzBRmFlyCThA 1 0  4 0 20kb 20kb
 [root@much sf_script]#
 ~~~
 
+
 ## 从 kibana 中查看数据
 
 
 ![kibana](/assets/img/kibana/kibana14.png)
 
 
+
+## 区别
+
+两者花费的时间不一样(这并不是一个随机的结果，重复执行很多次结果差异不大)
+
+~~~
+[root@much sf_script]# time ./csv2es2.py -i indextest -t typetest -f y.csv
+49 items import secussfully
+
+real	0m0.724s
+user	0m0.384s
+sys	0m0.084s
+[root@much sf_script]# time ./csv2es.py -i indextest -t typetest -f y.csv
+49 items import secussfully
+
+real	0m0.630s
+user	0m0.317s
+sys	0m0.112s
+[root@much sf_script]#
+~~~
+
+原因是 bulk 批量导入的效率与逐条导入的效率差异
+
+~~~
+for row in csv.DictReader(open(csvFile,'rb')):
+    action = {"_index":indexName,"_type":typeName,"_source":to_utf8(row)}
+    actions.append(action)
+    count += 1
+helpers.bulk(es,actions)
+----------
+for row in csv.DictReader(open(csvFile,'rb')):
+    es.create(index=indexName,doc_type=typeName,id=str(uuid.uuid4()),body=to_utf8(row))
+    count += 1
+~~~
+
+一个是将所有 action 都存入列表中(内存里)，调用一次 helpers.bulk API 将数据存入
+
+一个是每一条数据生成后，就立刻调用一次 create API，将数据存入
+
+前者在使用空间置换时间，后者在使用时间置换空间
+
+至于选择哪种执行方式，得看当前的环境条件，内容少内存多时延容忍度小选择前者，内容多内存少时延容忍度大选择后者
+
+
 ---
 
 # 总结
 
-相对于使用 logstash 此脚本可以不用操心列名的问题，因为它会自动将表头与内容处理成哈希(字典)，只要确保表头与此列是对应关系，列的数量变化都是兼容的，(logstash 需要针对不同的数据源，处理 filter csv 插件中的列名)
+同一功能，有很多种实现方式，但是不同的方式，代价不一样，侧重也不一样，我们总会尽量尝试可接受的代价与更倾向的侧重方案
 
 
 * TOC
