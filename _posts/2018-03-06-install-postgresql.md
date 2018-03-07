@@ -595,4 +595,4 @@ testdb=# \q
 
 
 [postgresql]:https://www.postgresql.org/
-[postgresql_dl]:https://www..org/download/linux/redhat/
+[postgresql_dl]:https://www.postgresql.org/download/linux/redhat/
