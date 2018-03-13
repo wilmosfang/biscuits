@@ -1,18 +1,19 @@
 ---
 layout: post
-title: "Install Cobbler"
-date: 2018-03-11 15:18:25
+title: "Importing Distribution to Cobbler"
+date: 2018-03-13 00:22:04
 image: '/assets/img/'
-description: '安装 Cobbler'
+description: '导入发行版到 Cobbler'
 main-class: cobbler
 color: '#262626'
 tags:
  - cobbler
 categories:
  - cobbler
-twitter_text: 'simple process of Cobbler installation'
-introduction: 'installation of Cobbler'
+twitter_text: 'simple process of Importing Distribution to Cobbler'
+introduction: 'Importing Distribution to Cobbler'
 ---
+
 
 
 ## 前言
@@ -23,7 +24,9 @@ introduction: 'installation of Cobbler'
 
 可以实现 Linux 的自动化部署与初始化配置，在需要安装大量 OS 的场景下，可以极大提升效率
 
-这里分享一下 **[Cobbler][cobbler]** 的安装方法
+前面一篇中在本地搭建了一个 **[Cobbler][cobbler]** 服务
+
+这里分享一下 **[Cobbler][cobbler]** 中导入发行版的方法
 
 参考 **[Cobbler Quickstart Guide][cobbler_ins]**
 
@@ -78,6 +81,35 @@ introduction: 'installation of Cobbler'
 [root@56-201 ~]#
 ~~~
 
+
+cobbler 的版本与环境信息
+
+~~~
+[root@56-201 ~]# cobbler check
+No configuration problems found.  All systems go.
+[root@56-201 ~]# cobbler version
+Cobbler 2.8.2
+  source: ?, ?
+  build time: Mon Sep 18 15:16:53 2017
+[root@56-201 ~]# ps faux | grep httpd
+root      2818  0.0  0.0 112648  1016 pts/0    S+   08:51   0:00          \_ grep --color=auto httpd
+root      2678  0.0  0.4 261156  9380 ?        Ss   08:49   0:00 /usr/sbin/httpd -DFOREGROUND
+apache    2681  0.0  0.1 263168  3892 ?        S    08:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache    2682  0.0  0.4 265512  8252 ?        S    08:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache    2683  0.0  0.4 265512  8252 ?        S    08:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache    2684  0.0  0.4 265512  8252 ?        S    08:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache    2685  0.0  0.4 265512  8252 ?        S    08:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache    2686  0.0  0.4 265512  8252 ?        S    08:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+[root@56-201 ~]# ps faux | grep rsync
+root       791  0.0  0.0 114644  1016 ?        Ss   08:12   0:00 /usr/bin/rsync --daemon --no-detach
+root      2822  0.0  0.0 112648  1016 pts/0    S+   08:51   0:00          \_ grep --color=auto rsync
+[root@56-201 ~]# ps faux | grep cobbler
+root      2824  0.0  0.0 112648  1012 pts/0    S+   08:52   0:00          \_ grep --color=auto cobbler
+root      2731  0.2  1.4 438724 29788 ?        Ss   08:49   0:00 /usr/bin/python2 -s /usr/bin/cobblerd -F
+[root@56-201 ~]# cobbler check
+No configuration problems found.  All systems go.
+[root@56-201 ~]#
+~~~
 
 
 ## 查看包
