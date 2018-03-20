@@ -9,6 +9,7 @@ color:  '#808080'
 tags:
  - python
  - tools
+ - pip
 categories:
  - tools
 twitter_text: 'use PyInstaller to package a python script into a exe'

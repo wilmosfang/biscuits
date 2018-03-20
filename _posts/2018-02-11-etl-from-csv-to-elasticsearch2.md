@@ -10,6 +10,7 @@ tags:
  - python
  - es
  - etl
+ - pip
 categories:
  - python
 twitter_text: 'import data from CSV to Elasticsearch with es client API'

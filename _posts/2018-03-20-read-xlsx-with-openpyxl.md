@@ -9,6 +9,7 @@ color: '#265277'
 tags:
  - python
  - openpyxl
+ - pip
 categories:
  - python
 twitter_text: 'Read xlsx file with python Openpyxl'
