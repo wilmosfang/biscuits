@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Read xlsx with Openpyxl"
-date: 2018-03-20 14:45:12
+title: "Write xlsx with Openpyxl"
+date: 2018-03-21 14:15:46
 image: '/assets/img/'
-description: '使用 Openpyxl 来读取 xlsx 文件'
+description: '使用 Openpyxl 来写 xlsx 文件'
 main-class: python
 color: '#265277'
 tags:
@@ -12,9 +12,11 @@ tags:
  - pip
 categories:
  - python
-twitter_text: 'Read xlsx file with python Openpyxl'
-introduction: 'the simple way to read xlsx file with python Openpyxl'
+twitter_text: 'Write xlsx file with python Openpyxl'
+introduction: 'the simple way to write xlsx file with python Openpyxl'
 ---
+
+
 
 
 ## 前言
@@ -27,7 +29,7 @@ introduction: 'the simple way to read xlsx file with python Openpyxl'
 
 **[Openpyxl][openpyxl]** 是基于 **PHPExcel** 开发出来的
 
-这里演示一下如何傅用 **[Openpyxl][openpyxl]** 来读取 **xlsx** 文件
+这里演示一下如何傅用 **[Openpyxl][openpyxl]** 来修改和写入 **xlsx** 文件
 
 > **Tip:** 当前的版本为 **openpyxl-2.5.1**
 
@@ -254,112 +256,144 @@ In [2]:
 ~~~
 
 
-### 只读打开
+### 读取内容
 
 ~~~
-In [2]: wb=load_workbook(filename='/tmp/test.xlsx', read_only=True)
+In [2]: wb = load_workbook(filename='/tmp/test.xlsx', read_only=True)
 
-In [3]:
-~~~
+In [3]: ws=wb['test2']
 
-
-### 显示分页
-
-~~~
-In [3]: wb.sheetnames
-Out[3]: ['test1', 'test2']
-
-In [4]: wb
-Out[4]: <openpyxl.workbook.workbook.Workbook at 0x7f835814e630>
-
-In [5]:
-~~~
-
-
-### 选择分页
-
-顺便可以展示一下属性
-
-~~~
-In [5]: ws=wb['test1']
-
-In [6]: ws
-Out[6]: <openpyxl.worksheet.read_only.ReadOnlyWorksheet at 0x7f835816aa58>
-
-In [7]: ws.max_row
-Out[7]: 3
-
-In [8]: ws.max_column
-Out[8]: 4
-~~~
-
-
-### 选择第一行
-
-~~~
-In [9]: r1=ws[1]
-
-In [10]: r1
-Out[10]: 
-(<ReadOnlyCell 'test1'.A1>,
- <ReadOnlyCell 'test1'.B1>,
- <ReadOnlyCell 'test1'.C1>,
- <ReadOnlyCell 'test1'.D1>)
-
-In [11]: [x.value for x in r1]
-Out[11]: ['a', 'b', 'c', 'd']
-
-In [12]: 
-~~~
-
-### 选择行范围
-
-并且将值打印出来
-
-~~~
-In [27]: ws[2:ws.max_row]
-Out[27]: 
-((<ReadOnlyCell 'test1'.A2>,
-  <ReadOnlyCell 'test1'.B2>,
-  <ReadOnlyCell 'test1'.C2>,
-  <ReadOnlyCell 'test1'.D2>),
- (<ReadOnlyCell 'test1'.A3>,
-  <ReadOnlyCell 'test1'.B3>,
-  <ReadOnlyCell 'test1'.C3>,
-  <ReadOnlyCell 'test1'.D3>))
-
-In [28]: for row in ws[2:ws.max_row]:
-    ...:     for cv in [x.value for x in row]:
-    ...:         print('%s '%cv,end="")
-    ...:     print("")
-    ...:     
+In [4]: for row in ws.rows:
+   ...:     for cell in row:
+   ...:         print("%s "%cell.value,end='')
+   ...:     print('')
+   ...:     
+e f g h 
 1 2 3 4 
 5 6 7 8 
 
-In [29]: 
+In [5]: 
 ~~~
 
-
-### 格式输出
-
-将第一行作为参数，其它行作为参数值
-
-(类似于哈希化)
+### 写入内容
 
 ~~~
-In [32]: for row in ws[2:ws.max_row]:
-    ...:     for cv in map(lambda x,y: '--%s="%s"'%(x,y),[x.value for x in r1],[
-    ...: y.value for y in row]):
-    ...:         print('%s '%cv,end="")
-    ...:     print("")
+In [1]: from openpyxl import Workbook
+
+In [2]: wb = Workbook(write_only=True)
+
+In [3]: ws = wb.create_sheet()
+
+In [4]: ws.append([1,2,3,4,5])
+
+In [5]: ws.append(['just','for','test'])
+
+In [6]: ws.append(['hello','openpyxl'])
+
+In [7]: ws.append(['1.2','2.3','2017/1/1'])
+
+In [8]: wb.save('/tmp/fortest.xlsx')
+
+In [9]: ls -l /tmp/fortest.xlsx
+-rw-r--r-- 1 root root 4794 3月  21 23:15 /tmp/fortest.xlsx
+
+In [10]:
+~~~
+
+保存退出后进行查看
+
+![openpyxl](/assets/img/openpyxl/openpyxl03.png)
+
+
+和前面写入的内容一致
+
+
+### 读写单元格内容
+
+~~~
+In [1]: from openpyxl import load_workbook
+
+In [2]: wb = load_workbook(filename='/tmp/test.xlsx')
+
+In [3]: wb.sheetnames
+Out[3]: ['test1', 'test2']
+
+In [4]: ws=wb['test2']
+
+In [5]: ws.title
+Out[5]: 'test2'
+
+In [6]: ws.title='new_title'
+
+In [7]: ws.title
+Out[7]: 'new_title'
+
+In [8]: wb.sheetnames
+Out[8]: ['test1', 'new_title']
+
+In [9]: [x.value for x in ws[1]]
+Out[9]: ['e', 'f', 'g', 'h']
+
+In [10]: [x.value for x in ws[2]]
+Out[10]: [1, 2, 3, 4]
+
+In [11]: [x.value for x in ws[3]]
+Out[11]: [5, 6, 7, 8]
+
+In [12]: for r in range(1,10):
+    ...:     for c in range(1,10):
+    ...:         ws.cell(r,c).value=r*c
+    ...:         
+
+In [13]: for row in ws.rows:
+    ...:     for cell in row:
+    ...:         print("%4s "%cell.value,end='')
+    ...:     print('')
     ...:     
---a="1" --b="2" --c="3" --d="4" 
---a="5" --b="6" --c="7" --d="8" 
+   1    2    3    4    5    6    7    8    9 
+   2    4    6    8   10   12   14   16   18 
+   3    6    9   12   15   18   21   24   27 
+   4    8   12   16   20   24   28   32   36 
+   5   10   15   20   25   30   35   40   45 
+   6   12   18   24   30   36   42   48   54 
+   7   14   21   28   35   42   49   56   63 
+   8   16   24   32   40   48   56   64   72 
+   9   18   27   36   45   54   63   72   81 
 
-In [33]: 
+In [14]: 
+
 ~~~
 
-到此已经借用 Openpyxl 完成了对于 xlsx 的最基本的读操作
+
+
+### 保存退出
+
+~~~
+In [15]: wb.save('/tmp/newtest.xlsx')
+
+In [16]: quit
+[root@56-201 ~]# 
+~~~
+
+拷贝到本地
+
+~~~
+wilmos@Nothing:~$ scp root@h201:/tmp/newtest.xlsx /tmp/
+newtest.xlsx                                  100% 6963     6.8KB/s   00:00    
+wilmos@Nothing:~$ 
+~~~
+
+可以看到内容如预期发生了变化(包括了sheetname)
+
+![openpyxl](/assets/img/openpyxl/openpyxl04.png)
+
+而另一张表的内容没有发生任何变化
+
+![openpyxl](/assets/img/openpyxl/openpyxl05.png)
+
+
+
+到此已经借用 Openpyxl 完成了对于 xlsx 的最基本的写操作
 
 ---
 
@@ -371,7 +405,7 @@ workbook 然后是 worksheet 然后是 cell
 
 cell 有两个维度 row 和 column 
 
-两个维度定位了一个 cell 后可以用 value 来取出其中的值
+两个维度定位了一个 cell 后可以用 value 来取出其中的值进行读或写
 
 
 * TOC
