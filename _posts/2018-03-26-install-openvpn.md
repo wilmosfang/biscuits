@@ -32,7 +32,7 @@ introduction: 'installation of OpenVPN'
 
 参考 **[HOWTO][openvpn_install]**
 
-> **Tip:** 当前的版本为 **openvpn 2.5**
+> **Tip:** 当前的版本为 **openvpn 2.4.5**
 
 ---
 

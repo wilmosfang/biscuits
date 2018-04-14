@@ -17,8 +17,7 @@ twitter_text: 'ShadowsocksR install simple process'
 introduction: 'installation method of ShadowsocksR'
 ---
 
-
-## 前言
+# 前言
 
 **[ShadowsocksR][shadowsocksr]** 是一款开源的用来穿透 **GFW** 的软件
 
@@ -29,9 +28,9 @@ introduction: 'installation method of ShadowsocksR'
 成功连接后，其后的通讯就可以进行加密与伪装来穿透 **GFW**，达到科学上网的效果
 
 >仅代表个人观点: 不允许自由了解外面的世界，对一些信息有意加以过滤与封锁，是否等价于给门窗糊上报纸，不让风景透过窗户，也不让自己成为外面人的风景，若干年后的人们再次回望这段历史的时候，会不会觉得愚昧和荒谬
-
+>
 >堤坝可以用来防洪，本有其积极的意义，但若借机建得太高，以至于阻断了自由交流，可能就成了思想的牢笼
-
+>
 >有一个人说过，可以永远欺骗一部分人或者暂时欺骗所有人，但却无法永远欺骗所有人
 
 好在还有那么一小片镜子，可以透过一些微小的缝隙，反射出外面的光芒

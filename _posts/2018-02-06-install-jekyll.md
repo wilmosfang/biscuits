@@ -18,8 +18,7 @@ twitter_text: 'simple process of Jekyll installation'
 introduction: 'installation method of Jekyll'
 ---
 
-
-## 前言
+# 前言
 
 这里演示一下如何用十分钟搭建一个 **[Jekyll][jekyll]** 博客
 
