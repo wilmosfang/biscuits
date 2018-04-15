@@ -11,6 +11,7 @@ tags:
  - apache
  - mysql
  - php
+ - lamp
  - phpmyadmin
 categories:
  - php

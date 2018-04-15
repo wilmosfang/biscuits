@@ -11,6 +11,7 @@ tags:
  - apache
  - mysql
  - php
+ - lamp
 categories:
  - php
 twitter_text: 'simple process of LAMP configuration'
