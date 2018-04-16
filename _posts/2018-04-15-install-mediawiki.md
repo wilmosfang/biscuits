@@ -18,7 +18,6 @@ categories:
 twitter_text: 'simple process of MediaWiki installation'
 introduction: 'Installation of MediaWiki'
 ---
-
 # 前言
 
 **[MediaWiki][mediawiki]** 是一款用 php 实现的开源 **wiki** 软件
