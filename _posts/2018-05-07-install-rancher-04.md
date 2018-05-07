@@ -9,6 +9,7 @@ color: '#2980b8'
 tags:
  - docker
  - rancher
+ - nginx
 categories: 
  - rancher
 twitter_text: 'simple process of Rancher installation'
@@ -25,7 +26,7 @@ introduction: 'Installation of Rancher'
 
 如果要快速构建一套 **CI/CD** 发布平台， **[Rancher][rancher]** 是一个不错的选择
 
-这里基于前面的工作，演示一下如何构建一个应用
+这里基于前面的工作，演示一下如何构建一个 Nginx 应用
 
 参考 **[Quick Start Guide][rancher_guide]**
 
