@@ -13,7 +13,7 @@ tags:
 categories: 
  - rancher
 twitter_text: 'simple process of Rancher installation'
-introduction: 'Installation of Rancher'
+introduction: 'Installation of Nginx'
 ---
 
 # 前言
