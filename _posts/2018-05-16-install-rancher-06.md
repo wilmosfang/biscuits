@@ -33,6 +33,7 @@ introduction: 'expand capacity'
 
 > **Tip:** 当前的版本为 **Rancher 2.0 GA** 和 **rke v0.1.7-rc4**
 
+---
 
 ## 运行环境
 
