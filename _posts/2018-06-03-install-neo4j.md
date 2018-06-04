@@ -281,6 +281,8 @@ Starting Neo4j.
 ...
 ~~~
 
+关于 neo4j 容器的简单配置可以参考 **[This section describes how to run Neo4j in a Docker container][neo4j_conf]**
+
 ## 再次登录
 
 ![neo4j](/assets/img/neo4j/neo4j03.png)
@@ -310,3 +312,5 @@ Starting Neo4j.
 [neo4j]:https://neo4j.com/
 [neo4j_started]:https://neo4j.com/developer/get-started/
 [neo4j_docker]:https://hub.docker.com/_/neo4j/
+[neo4j_conf]:https://neo4j.com/docs/operations-manual/current/installation/docker/
+
