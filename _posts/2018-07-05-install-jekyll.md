@@ -17,7 +17,7 @@ tags:
 categories:
  - jekyll
 twitter_text: 'simple process of Jekyll installation'
-introduction: 'installation method of Jekyll'
+introduction: 'installation of Jekyll'
 ---
 
 # 前言
@@ -34,7 +34,7 @@ introduction: 'installation method of Jekyll'
 
 # 操作
 
-## 环境测试
+## 环境
 
 ~~~
 [root@h105 ~]# hostnamectl 
