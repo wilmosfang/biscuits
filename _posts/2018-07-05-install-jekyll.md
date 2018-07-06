@@ -16,8 +16,8 @@ tags:
  - gulp
 categories:
  - jekyll
-twitter_text: 'simple process of Jekyll installation'
-introduction: 'installation of Jekyll'
+twitter_text: 'Simple process of Jekyll installation'
+introduction: 'Installation of Jekyll'
 ---
 
 # 前言
