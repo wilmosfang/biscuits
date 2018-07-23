@@ -82,6 +82,10 @@ Permissive
 [root@h165 ~]# 
 ~~~
 
+
+>**Note:** 如果 SELINUX 不关闭会无法访问 web 界面
+
+
 ## 关闭防火墙 ##
 
 ~~~
@@ -3525,13 +3529,8 @@ c41fb67653ac: Waiting
 
 这个过程有些慢长
 
-~~~
-
-~~~
 
 完成后，遵循 coco 一样的方法，在 jumpserver 中接受注册
-
-png
 
 
 
@@ -3542,6 +3541,31 @@ png
 总体来将 jumpserver 涉及的组件有点多
 
 这些组件拼凑起来一起协同完成管理任务
+
+所以要整体是否运行正常要考虑以下几个服务
+
+* nginx
+* mysql
+* jumpserver
+* coco
+* guacamole
+
+
+这几个组件的用途这里作一个简要的说明　
+
+* Jumpserver：为管理后台，管理员可以通过Web页面进行资产管理、用户管理、资产授权等操作
+* Coco: 为 SSH Server 和 Web Terminal Server 用户可以通过使用自己的账户登录 SSH 或者 Web Terminal 直接访问被授权的资产, 不需要知道服务器的账户密码
+* Luna: 为 Web Terminal Server 前端页面，用户使用 Web Terminal 方式登录所需要的组件
+* Guacamole: 为 Windows 组件，用户可以通过 Web Terminal 来连接 Windows 资产 ，暂时只能通过 Web Terminal 来访问
+
+
+端口说明
+
+* Jumpserver 默认端口为 8080/tcp 配置文件在 jumpserver/config.py
+* Coco 默认 SSH 端口为 2222/tcp ，默认 Web Terminal 端口为 5000/tcp 配置文件在 coco/conf.py
+* Guacamole 默认端口为 8081/tcp 在 docker run 时指定
+* Nginx 默认端口为 80/tcp 配置在 nginx/nginx.conf 中指定
+
 
 
 * TOC
