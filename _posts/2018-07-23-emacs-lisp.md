@@ -19,7 +19,7 @@ introduction:  'Learn Emacs Lisp in 15 minitus'
 
 Lisp 是一门很古老的语言
 
->LISP是具有悠久歷史的計算機編程語言家族，有獨特和完全括號的前綴符號表示法，起源於西元1958年，是現今第二悠久而仍廣泛使用的高階編程語言，只有FORTRAN編程語言比它更早一年，LISP編程語族已經演變出許多種方言，現代最著名的通用編程語種是Common Lisp和Scheme :来自 wiki
+>LISP 是具有悠久历史的计算机编程语言家族，有独特和完全括号的前缀符号表示法，起源于1958年，是现今第二悠久而仍广泛使用的高级编程语言，只有 FORTRAN 编程语言比它更早一年，LISP 编程语族已经演变出许多种方言，现代最著名的通用编程语种是 Common Lisp 和 Scheme , 以上解释来自 WIKI
 
 Emacs Lisp 是 Lisp 的一个分支
 
