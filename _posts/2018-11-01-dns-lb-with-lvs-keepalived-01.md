@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "DNS HA LB(with lvs and keepalived)"
+title: "Build DNS HA LB Cluser"
 date: 2018-11-01 18:06:30
 image: '/assets/img/'
-description:  '使用 LVS+Keepalived 来实现 DNS LB'
+description:  '使用 LVS+Keepalived 来实现 DNS 高可用 LB 集群'
 main-class:  'lvs'
 color: '#3c4a6a'
 tags:
