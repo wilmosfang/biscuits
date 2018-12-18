@@ -12,11 +12,11 @@ var env         = require('minimist')(process.argv.slice(2)),
 	imagemin    = require('gulp-imagemin'),
 	cp          = require('child_process');
 
-var messages = {
-	jekyllBuild: '<span style="color: grey">Running:</span> $ jekyll build'
-};
+//var messages = {
+//	jekyllBuild: '<span style="color: grey">Running:</span> $ jekyll build'
+//};
 
-var jekyllCommand = (/^win/.test(process.platform)) ? 'jekyll.bat' : 'jekyll';
+//var jekyllCommand = (/^win/.test(process.platform)) ? 'jekyll.bat' : 'jekyll';
 
 /**
  * Build the Jekyll Site
