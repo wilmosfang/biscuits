@@ -12,6 +12,8 @@ var env         = require('minimist')(process.argv.slice(2)),
 	imagemin    = require('gulp-imagemin'),
 	cp          = require('child_process');
 
+
+	
 //var messages = {
 //	jekyllBuild: '<span style="color: grey">Running:</span> $ jekyll build'
 //};
