@@ -4,7 +4,7 @@ title: "Install PostgreSQL 11"
 date: 2018-12-19 17:39:59
 image: '/assets/img/'
 description: '安装 PostgreSQL 11'
-main-class:  postgresql
+main-class:  'postgresql'
 color: '#336790'
 tags:
  - postgresql
