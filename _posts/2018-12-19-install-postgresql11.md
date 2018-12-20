@@ -8,7 +8,7 @@ main-class:  'postgresql'
 color: '#336790'
 tags:
  - postgresql
-categories:
+categories: 
  - postgresql
 twitter_text: 'simple process of PostgreSQL installation'
 introduction: 'installation of PostgreSQL'
