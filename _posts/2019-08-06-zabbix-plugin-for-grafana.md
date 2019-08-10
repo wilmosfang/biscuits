@@ -166,7 +166,7 @@ Restarting grafana-server (via systemctl):                 [  OK  ]
 
 因为 Grafana 非常友好的插件扩展机制 **[Zabbix Plugin for Grafana][alexanderzobnin-zabbix-app]**  的安装非常容易
 
-`**grafana-cli plugins install alexanderzobnin-zabbix-app**`
+**`grafana-cli plugins install alexanderzobnin-zabbix-app`**
 
 
 * TOC
