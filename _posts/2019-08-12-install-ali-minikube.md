@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Install Kubectl and Minikube"
-date: 2019-08-12 11:15:32
+title: "Install Ali Minikube"
+date: 2019-08-12 16:32:47
 image: '/assets/img/'
-description:  '安装 Kubectl 和 Minikube'
+description:  '安装 Ali Minikube'
 main-class:  'tools'
 color: 
 tags:
@@ -13,8 +13,8 @@ tags:
  - minikube
 categories: 
 - tools
-twitter_text:  'simple process of Kubectl and Minikube installation'
-introduction: 'simple process of Kubectl and  Minikube installation'
+twitter_text:  'simple process of Ali Minikube installation'
+introduction: 'simple process of Ali  Minikube installation'
 ---
 
 
@@ -26,12 +26,14 @@ introduction: 'simple process of Kubectl and  Minikube installation'
 
 当前 **[Kubernetes][kubernetes]** 非常火热，几乎成了新一代运维体系中的基础架构，为了对其特性进行了解，准备使用 **[Minikube][minikube]** 来完成对 **[Kubernetes][kubernetes]** 的安装
 
-这里对 **[Minikube][minikube]** 的安装，进行一个简单的讲解
+根据官方的文档，在国内有 **GFW** ，会由于网络原因而无法正常下载资源
+
+这里对 **[Ali Minikube][minikube]** 的安装，进行一个简单的讲解
 
 参考 **[Install Minikube][install_minikube]** 
 
 
-> **Tip:** 当前的版本为 **minikube v1.3.0** 和 **kubectl v1.15.0**
+> **Tip:** 当前的版本为 **minikube v1.2.0** 和 **kubectl v1.15.0**
 
 ---
 
@@ -41,7 +43,7 @@ introduction: 'simple process of Kubectl and  Minikube installation'
 ## 环境
 
 ~~~
-root@pc:~# hostnamectl 
+nothing@pc:~$ hostnamectl 
    Static hostname: pc
          Icon name: computer-laptop
            Chassis: laptop
@@ -50,7 +52,7 @@ root@pc:~# hostnamectl
   Operating System: Ubuntu 18.10
             Kernel: Linux 4.18.0-25-generic
       Architecture: x86-64
-root@pc:~# ip a 
+nothing@pc:~$ ip a 
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -62,7 +64,7 @@ root@pc:~# ip a
 3: wlp110s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
     link/ether 84:ef:18:f3:92:47 brd ff:ff:ff:ff:ff:ff
     inet 10.0.0.4/24 brd 10.0.0.255 scope global dynamic noprefixroute wlp110s0
-       valid_lft 78725sec preferred_lft 78725sec
+       valid_lft 66109sec preferred_lft 66109sec
     inet6 fe80::5d3f:d6be:1fd9:4073/64 scope link noprefixroute 
        valid_lft forever preferred_lft forever
 4: vboxnet0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
@@ -73,7 +75,13 @@ root@pc:~# ip a
        valid_lft forever preferred_lft forever
 5: vboxnet1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
     link/ether 0a:00:27:00:00:01 brd ff:ff:ff:ff:ff:ff
-root@pc:~# 
+6: vboxnet2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 0a:00:27:00:00:02 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.99.1/24 brd 192.168.99.255 scope global vboxnet2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::800:27ff:fe00:2/64 scope link 
+       valid_lft forever preferred_lft forever
+nothing@pc:~$ 
 ~~~
 
 ## 开始前的准备 
@@ -83,7 +91,7 @@ root@pc:~#
 通过下面的命令来检查，看有没有 **`vmx|svm`** 指令集
 
 ~~~
-root@pc:~# grep -E --color 'vmx|svm' /proc/cpuinfo
+nothing@pc:~$ grep -E --color 'vmx|svm' /proc/cpuinfo
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
@@ -92,61 +100,8 @@ flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
-root@pc:~# 
+nothing@pc:~$ 
 ~~~
-
-## 安装 kubectl
-
-参考 **[Install kubectl on Linux][kubectl]** 安装 **kubectl**
-
-~~~
-root@pc:~# curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.0/bin/linux/amd64/kubectl
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 40.9M  100 40.9M    0     0  6468k      0  0:00:06  0:00:06 --:--:-- 7294k
-root@pc:~# echo $?
-0
-root@pc:~#
-root@pc:~# file kubectl 
-kubectl: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=einGj9I6M3H4OQuy-bjh/ujyMV7voNCHFA2QfI9Gb/5sgqz446kM2Asn787lMc/L6NPiCbVSghyh3NJH4YU, stripped
-root@pc:~# ll kubectl 
--rw-r--r-- 1 root root 42985504 Ago 12 21:15 kubectl
-root@pc:~# 
-~~~
-
-赋予执行权限
-
-~~~
-root@pc:~# ll kubectl 
--rw-r--r-- 1 root root 42985504 Ago 12 21:15 kubectl
-root@pc:~# chmod +x ./kubectl 
-root@pc:~# ll kubectl 
--rwxr-xr-x 1 root root 42985504 Ago 12 21:15 kubectl*
-root@pc:~# 
-~~~
-
-移动到执行路径中
-
-~~~
-root@pc:~# ll kubectl 
--rw-r--r-- 1 root root 42985504 Ago 12 21:15 kubectl
-root@pc:~# chmod +x ./kubectl 
-root@pc:~# ll kubectl 
--rwxr-xr-x 1 root root 42985504 Ago 12 21:15 kubectl*
-root@pc:~# 
-~~~
-
-查看版本
-
-~~~
-root@pc:~# kubectl version
-Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.0", GitCommit:"e8462b5b5dc2584fdcd18e6bcfe9f1e4d970a529", GitTreeState:"clean", BuildDate:"2019-06-19T16:40:16Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"linux/amd64"}
-The connection to the server localhost:8080 was refused - did you specify the right host or port?
-root@pc:~# 
-~~~
-
-**kubectl** 已经安装成功
-
 
 ## 安装 virtualbox
 
@@ -155,7 +110,7 @@ root@pc:~#
 这个过程就是一个软件包的安装过程，我这里就不演示了
 
 ~~~
-root@pc:~# virtualbox -h
+nothing@pc:~$ virtualbox -h
 Oracle VM VirtualBox Manager 5.2.24
 (C) 2005-2019 Oracle Corporation
 All rights reserved.
@@ -198,7 +153,7 @@ The following environment (and extra data) variables are evaluated:
                              show debug windows at VM startup
   VBOX_GUI_NO_DEBUGGER       disable the GUI debug menu and debug windows
 
-root@pc:~#
+nothing@pc:~$ 
 ~~~
 
 
@@ -210,84 +165,51 @@ root@pc:~#
 ## 安装 Minikube
 
 ~~~
-root@pc:~# curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 
+nothing@pc:~$ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.2.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 53.1M  100 53.1M    0     0  5020k      0  0:00:10  0:00:10 --:--:-- 5360k
-root@pc:~# echo $?
-0
-root@pc:~# ll minikube 
--rw-r--r-- 1 root root 55754504 Ago 12 22:39 minikube
-root@pc:~# file minikube 
-minikube: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, Go BuildID=tMjE5GbTZG3pynscXYnA/Z7r5TXGWDW5Jjnr-1aGV/Dp_bEdM72HUm6v9ZMT6g/bQg32CXSAa5-_KWYXJr2, BuildID[sha1]=5aa93ffca621e29f89597967c0166f249b685f4b, not stripped
-root@pc:~# du -sh minikube 
-54M	minikube
-root@pc:~# chmod +x minikube 
-root@pc:~# install minikube  /usr/local/bin
-root@pc:~# 
-root@pc:~# ll minikube 
--rwxr-xr-x 1 root root 55754504 Ago 12 22:39 minikube*
-root@pc:~# mi
-migrate-pubring-from-classic-gpg  min12xxw
-mimeopen                          minfo
-mimetype                          minikube
-root@pc:~# 
-root@pc:~# minikube -h
-Minikube is a CLI tool that provisions and manages single-node Kubernetes
-clusters optimized for development workflows.
-
-Basic Commands:
-  start          Starts a local kubernetes cluster
-  status         Gets the status of a local kubernetes cluster
-  stop           Stops a running local kubernetes cluster
-  delete         Deletes a local kubernetes cluster
-  dashboard      Access the kubernetes dashboard running within the minikube
-cluster
-
-Images Commands:
-  docker-env     Sets up docker env variables; similar to '$(docker-machine
-env)'
-  cache          Add or delete an image from the local cache.
-
-Configuration and Management Commands:
-  addons         Modify minikube's kubernetes addons
-  config         Modify minikube config
-  profile        Profile gets or sets the current minikube profile
-  update-context Verify the IP address of the running cluster in kubeconfig.
-
-Networking and Connectivity Commands:
-  service        Gets the kubernetes URL(s) for the specified service in your
-local cluster
-  tunnel         tunnel makes services of type LoadBalancer accessible on
-localhost
-
-Advanced Commands:
-  mount          Mounts the specified directory into minikube
-  ssh            Log into or run a command on a machine with SSH; similar to
-'docker-machine ssh'
-  kubectl        Run kubectl
-
-Troubleshooting Commands:
-  ssh-key        Retrieve the ssh identity key path of the specified cluster
-  ip             Retrieves the IP address of the running cluster
-  logs           Gets the logs of the running instance, used for debugging
-minikube, not user code
-  update-check   Print current and latest version number
-  version        Print the version of minikube
-
-Other Commands:
-  completion     Outputs minikube shell completion for the given shell (bash or
-zsh)
-
-Use "minikube <command> --help" for more information about a given command.
-root@pc:~# minikube version
-minikube version: v1.3.0
-commit: 43969594266d77b555a207b0f3e9b3fa1dc92b1f
-root@pc:~# 
+100 39.8M  100 39.8M    0     0  6619k      0  0:00:06  0:00:06 --:--:-- 7247k
+[sudo] nothing 的密码： 
+nothing@pc:~$ 
+nothing@pc:~$ minikube version
+minikube version: v1.2.0
+nothing@pc:~$
 ~~~
 
 到此 **[Minikube][minikube]** 已经安装完毕
 
+
+## 启动一个 k8s 集群
+
+~~~
+nothing@pc:~$ minikube start --registry-mirror=https://registry.docker-cn.com
+* minikube v1.2.0 on linux (amd64)
+* using image repository registry.cn-hangzhou.aliyuncs.com/google_containers
+* Downloading Minikube ISO ...
+ 129.33 MB / 129.33 MB [============================================] 100.00% 0s
+* Creating virtualbox VM (CPUs=2, Memory=2048MB, Disk=20000MB) ...
+* Configuring environment for Kubernetes v1.15.0 on Docker 18.09.6
+* Downloading kubeadm v1.15.0
+* Downloading kubelet v1.15.0
+* Pulling images ...
+* Launching Kubernetes ... 
+* Verifying: apiserver proxy etcd scheduler controller dns
+* Done! kubectl is now configured to use "minikube"
+nothing@pc:~$ 
+~~~
+
+![k8s](/assets/img/k8s/k8s01.png)
+
+查看状态
+
+~~~
+nothing@pc:~$ minikube status
+host: Running
+kubelet: Running
+apiserver: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.101
+nothing@pc:~$ 
+~~~
 
 ---
 
@@ -305,9 +227,10 @@ root@pc:~#
 
 [minikube]:https://kubernetes.io/docs/setup/learning-environment/minikube/
 [kubernetes]:https://kubernetes.io/
-[install_minikube]:https://kubernetes.io/docs/tasks/tools/install-minikube/
+[install_minikube]:https://yq.aliyun.com/articles/508460
 [kubectl]:https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux
 [virtualbox]:https://www.virtualbox.org/wiki/Downloads
+
 
 
 
