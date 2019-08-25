@@ -563,7 +563,7 @@ redmine-4.0.4/bin/rake
 ~~~
 
 
-## 配置数据库
+## 配置数据库连接信息
 
 ~~~
 [root@redmine config]# pwd
@@ -670,7 +670,7 @@ Done installing documentation for pg after 1 seconds
 [root@redmine redmine-4.0.4]# 
 ~~~
 
->**Note:** 如果不安装此开发包，在 gp gem 的安装过程中，会有报错
+>**Note:** 如果不安装此开发包，在 pg gem 的安装过程中，会有报错
 
 ~~~
 ...
@@ -738,9 +738,7 @@ Make sure that `gem install pg -v '1.1.4' --source
 
 In Gemfile:
   pg
-[root@redmine redmine-4.0.4]# gem install pg -v '1.1.4' --source
-ERROR:  While executing gem ... (OptionParser::MissingArgument)
-    missing argument: --source
+[root@redmine redmine-4.0.4]# 
 [root@redmine redmine-4.0.4]# gem install pg -v '1.1.4' 
 Building native extensions. This could take a while...
 ERROR:  Error installing pg:
@@ -2680,7 +2678,7 @@ sudo chmod -R 755 files log tmp public/plugin_assets
 sudo find files log tmp public/plugin_assets -type f -exec chmod -x {} +
 ~~~
 
-## 测试安装
+## 测试运行
 
 通过 **WEBrick** 来运行安装
 
@@ -2700,7 +2698,7 @@ sudo find files log tmp public/plugin_assets -type f -exec chmod -x {} +
 
 进行访问
 
-http://10.1.0.201:3000/
+**`http://10.1.0.201:3000/`**
 
 默认密码为:
 
@@ -2745,7 +2743,7 @@ http://10.1.0.201:3000/
 
 ![redmine](/assets/img/redmine/redmine09.png)
 
-
+致此 **Redmine** 的安装就完成了
 
 ---
 
@@ -2753,7 +2751,7 @@ http://10.1.0.201:3000/
 
 一个敏捷开发团队一定会需要一套项目管理软件
 
-以下评价来源于百度百科
+对以下常见的项目管理软件评价(来源于百度百科)
 
 * Trac: 基于 Python 的开源程序，应该是最早将 Ticket 与项目结合起来的开发管理系统，支持 Wiki、Timeline、Report 和项目模块分级与里程碑定义，还能够绑定查看SVN内容，简单易用，但是团队开发速度太慢，很多功能缺失，无法进行权限分配、多项目管理，配置不够灵活
 * Jira+Confluence: 基于 Java 的 Bug 追踪和企业 Wiki 系统，需要购买，而且很贵，Jira 的 Bug 和事务流管理能力很强大，Confluence 应该是目前最好的企业 Wiki 系统，扩展性强
