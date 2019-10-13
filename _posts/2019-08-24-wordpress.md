@@ -19,6 +19,8 @@ twitter_text: 'simple process of WordPress installation'
 introduction: 'Installation of WordPress'
 ---
 
+
+
 # 前言
 
 **[WordPress][wordpress]** 是一款用 php 实现的开源 CMS 软件

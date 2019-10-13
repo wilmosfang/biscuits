@@ -1,6 +1,7 @@
 .vscode
 package.json
 package-lock.json
+.jekyll-cache
 .DS_Store
 _site
 node_modules
