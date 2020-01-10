@@ -900,10 +900,6 @@ Started SonarQube.
 
 ![sonarqube](/assets/img/sonarqube/sonarqube04.png)
 
-可以支持多种语言
-
-![sonarqube](/assets/img/sonarqube/sonarqube05.png)
-
 到此 sonarqube 的 server 端已经安装完成
 
 如何使用，如果集成到 CI 中，留到后来来讲
@@ -919,7 +915,7 @@ Started SonarQube.
 
 上面的步骤描述了安装 **[SonarQube][sonarqube]** 的过程
 
-后面接着来讲如何扫描与如何与 CI 的集成
+后面接着讲如何扫描如何与 CI 集成
 
 * TOC
 {:toc}
