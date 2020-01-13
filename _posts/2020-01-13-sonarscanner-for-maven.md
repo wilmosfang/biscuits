@@ -176,7 +176,7 @@ drwxr-xr-x. 2 vagrant vagrant    37 Nov  7 12:32 logging
 </profiles>
 ...
 ...
-<profile>
+        <profile>
             <id>sonar</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -197,7 +197,11 @@ drwxr-xr-x. 2 vagrant vagrant    37 Nov  7 12:32 logging
 解压一个 demo 项目
 
 ~~~
-n-hello/pom.xml     
+[vagrant@workspace ~]$ unzip x.zip 
+Archive:  x.zip
+   creating: maven-hello/
+   creating: maven-hello/target/
+  inflating: maven-hello/pom.xml     
   inflating: maven-hello/.classpath  
   inflating: maven-hello/.project    
    creating: maven-hello/src/
@@ -213,6 +217,7 @@ n-hello/pom.xml
    creating: maven-hello/src/main/java/com/itranswarp/
    creating: maven-hello/src/main/java/com/itranswarp/learnjava/
   inflating: maven-hello/src/main/java/com/itranswarp/learnjava/Main.java  
+[vagrant@workspace ~]$  
 [vagrant@workspace ~]$ ls
 maven-hello  maven-plugin  maven-plugin.zip  x.zip
 [vagrant@workspace ~]$ cd maven-hello/
@@ -241,7 +246,7 @@ pom.xml  src  target
 ~~~
 
 
-进行验证
+进行检查
 
 ~~~
 [vagrant@workspace maven-hello]$ mvn clean verify sonar:sonar 
@@ -564,7 +569,7 @@ pom.xml  src  target
 
 ![sonarqube](/assets/img/sonarqube/sonarqube05.png)
 
-进入这个指定项目，查看详情
+进入指定项目，查看详情
 
 ![sonarqube](/assets/img/sonarqube/sonarqube06.png)
 
@@ -682,12 +687,12 @@ WARNING: All illegal access operations will be denied in a future release
 [vagrant@workspace maven-hello]$ 
 ~~~
 
-可以看到运行的历史记录
+可以看到多次运行的历史记录
 
 ![sonarqube](/assets/img/sonarqube/sonarqube09.png)
 
 
-到此 sonarqube 与 Maven 的集成就演示完毕了
+到此 SonarQube 与 Maven 的集成就演示完毕了
 
 ---
 
