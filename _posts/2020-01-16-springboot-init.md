@@ -12,7 +12,7 @@ tags:
  - springboot
  - java
 categories:
- - sonarqube
+ - java
 twitter_text: 'simple process of spring boot initialization'
 introduction: 'initialization method of spring boot'
 ---
