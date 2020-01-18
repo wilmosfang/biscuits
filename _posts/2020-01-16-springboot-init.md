@@ -27,13 +27,13 @@ introduction: 'initialization method of spring boot'
 
 具备以下特性
 
-~~~
-可以构建一个简单的 Spring 应用
-可以直接嵌入到 Tomcat, Jetty or Undertow 中，不用布署 war 文件
-集成默认的依赖简化构建配置
-可以方便地集成第三方库
-提供了一些类似于健康检查，外置配置，度量指标一类的生产特性
-~~~
+
+* 可以构建一个简单的 Spring 应用
+* 可以直接嵌入到 Tomcat, Jetty or Undertow 中，不用布署 war 文件
+* 集成默认的依赖 简化构建配置
+* 可以方便地集成第三方库
+* 提供了一些类似于健康检查，外置配置，度量指标一类的生产特性
+
 
 作为运维，非常有必要对它的构建过程有一定了解
 
@@ -69,7 +69,7 @@ introduction: 'initialization method of spring boot'
 | Undertow 2\.0 | 4\.0            |
 
 
-参考 **[spring_boot_start][spring_boot_start]**
+参考 **[Getting Started][spring_boot_start]**
 
 ---
 
@@ -207,9 +207,11 @@ OpenJDK 64-Bit Server VM (build 25.232-b09, mixed mode)
 
 ## 安装 gradle 
 
-构建工具可以使用 Gradle 和 Maven 这里我选择使用 Gradle 6.1
+构建工具可以使用 Gradle 和 Maven 
 
->**Tips:** 构建工具版本 Gradle 4+ or Maven 3.2+
+这里我选择使用 Gradle 6.1
+
+>**Tips:** 构建工具版本要求 Gradle 4+ or Maven 3.2+
 
 ~~~
 (base) [vagrant@workspace ~]$ sdk ls gradle
@@ -583,7 +585,7 @@ drwxrwxr-x. 2 vagrant vagrant    20 Jan 18 07:39 test
 
 通过 **[Spring Initializr][spring_initializr]** 可以快速地生成一个初始项目
 
-![sonarqube](/assets/img/springboot/springboot01.png)
+![springboot](/assets/img/springboot/springboot01.png)
 
 这里可以非常直观地进选择和配置
 
@@ -836,7 +838,7 @@ public class DemoApplication {
 (base) [vagrant@workspace demo]$
 ~~~
 
-编辑一下代码
+编辑一下 gradle 配置
 
 添加 **`testCompile 'com.jayway.jsonpath:json-path'`** 库
 
