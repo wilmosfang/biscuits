@@ -91,13 +91,13 @@ OS:           Linux 3.10.0-957.12.2.el7.x86_64 amd64
 
 ## 软件版本
 
-java 版本为 **1.8.0_232**
+java 版本为 **11.0.5**
 
 ~~~
 (base) [vagrant@workspace demo]$ java -version
-openjdk version "1.8.0_232"
-OpenJDK Runtime Environment (build 1.8.0_232-b09)
-OpenJDK 64-Bit Server VM (build 25.232-b09, mixed mode)
+openjdk version "11.0.5" 2019-10-15
+OpenJDK Runtime Environment 18.9 (build 11.0.5+10)
+OpenJDK 64-Bit Server VM 18.9 (build 11.0.5+10, mixed mode)
 (base) [vagrant@workspace demo]$
 ~~~
 
@@ -196,7 +196,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
-    id "org.sonarqube" version "2.8"
+	id "org.sonarqube" version "2.8" 
 }
 
 group = 'com.example'
@@ -247,7 +247,6 @@ systemProp.sonar.host.url=http://http://10.0.0.13:8000/sonarqube
 (base) [vagrant@workspace demo]$ gradle sonarqube -Dsonar.host.url=http://10.0.0.13:8000/sonarqube  -Dsonar.verbose=true
 
 > Task :sonarqube
-SonarScanner will require Java 11 to run starting in SonarQube 8.x
 SCM provider autodetection failed. Please use "sonar.scm.provider" to define SCM of your project, or disable the SCM Sensor in the project settings.
 Classes not found during the analysis : [javax.annotation.meta.When]
 
