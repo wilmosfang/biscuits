@@ -127,7 +127,7 @@ Branch master set up to track remote branch master from origin.
 
 ![gradle](/assets/img/jenkins/jenkins35.png)
 
-配置 webhook 的key
+生成 webhook 触发认证用的 key
 
 ![gradle](/assets/img/jenkins/jenkins36.png)
 
