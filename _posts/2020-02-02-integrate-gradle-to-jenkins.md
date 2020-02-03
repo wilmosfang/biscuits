@@ -72,7 +72,7 @@ introduction: 'Integrate Gradle to Jenkins'
 
 ## 配置 gradle 插件
 
-[Manage Jenkins] > [Global Tool Configuration]
+**`[Manage Jenkins] > [Global Tool Configuration]`**
 
 ![gradle](/assets/img/jenkins/jenkins34.png)
 
