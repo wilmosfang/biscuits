@@ -4,13 +4,13 @@ title: "Overview of Chaos engineering"
 date: 2020-03-06 16:27:11
 image: '/assets/img/'
 description: 'Chaos Engineering 概况'
-main-class: python
+main-class: tools
 color: 
 tags: 
  - tools
  - chaos
 categories: 
- - chaos
+ - tools
 twitter_text: 'Overview of Chaos Engineering'
 introduction: 'Overview of Chaos Engineering'
 ---
@@ -185,12 +185,13 @@ Peter Deutsch 提出的分布式系统八大谬论，概括了程序员可能对
 
 随着市场需求的更迭，软件架构的演进，现在的软件架构已经日趋复杂，在分布式的微服务中，应用逻辑的多层依赖关系已经变得越来越无法简单且直观的被理解，系统的脆弱性变得愈发明显，传统的高可用方案已经无法满足对系统脆弱性的补偿
 
-![chaos](/assets/img/chaos/chaos07.png)
-
-
 现存且已知的环境异常和风险可以有针对性进行加固
 
+![chaos](/assets/img/chaos/chaos05.png)
+
 但是未知的风险将无从着手，一旦触发却会让业务蒙受巨大损失让组织陷入被动局面
+
+![chaos](/assets/img/chaos/chaos07.png)
 
 混沌工程，就是在这种情景下产生，用来有效发掘此类风险的工程实践
 
@@ -198,7 +199,6 @@ Peter Deutsch 提出的分布式系统八大谬论，概括了程序员可能对
 
 通过一系列工程实践，让团队从无法识别特定风险到可以识别此类风险的一个过程
 
-![chaos](/assets/img/chaos/chaos05.png)
 
 (混沌工程暂时不包含如何修复此脆弱性的工作)
 
@@ -266,8 +266,11 @@ Peter Deutsch 提出的分布式系统八大谬论，概括了程序员可能对
 我们建议按照以下的顺序来执行混沌工程试验：
 
 Known Known：注意到并且了解原理
+
 Known Unknown：注意到但不了解原理
+
 Unknown Known：没有注意到但是了解原理
+
 Unknown Unknown：既没有注意到也不了解原理的
 
 ~~~
@@ -298,7 +301,7 @@ Unknown Unknown：既没有注意到也不了解原理的
 
 
 |  工具名称 | 最新版本  | 项目维护状态  |  主要构建语言 | 涉及场景  |特定依赖|链接地址|
-|---|---|---|---|---|---|---|
+|:---|:---|:---|:---|:---|:---|:---|
 |Chaos Monkey|	2.0.2	|2016.11之后不在功能开发	|Go	|终止EC2实例	|Spinnaker	|https://github.com/Netflix/chaosmonkey|
 |Simian Army	|2.5.3	|retired	|Java|	终止EC2实例；阻断网络流量；卸载磁盘卷；CPU/IO/磁盘空间突发过高；杀进程；路由失败；网络丢包；DynamoDB故障……	|无|	https://github.com/Netflix/SimianArmy和https://queue.acm.org/detail.cfm?id=2499552
 |orchestrator|	3.1.1|	alive|	Go|	纯MySQL集群故障场景	|无|	https://github.com/github/orchestrator|
