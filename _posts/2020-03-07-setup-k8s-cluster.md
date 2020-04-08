@@ -4,13 +4,13 @@ title: "Setup A K8S Cluster"
 date: 2020-03-07 15:23:11
 image: '/assets/img/'
 description: '启动一个 k8s 集群'
-main-class: k8s
+main-class: kubernetes
 color: 
 tags: 
  - tools
- - k8s
+ - kubernetes
 categories: 
- - k8s
+ - kubernetes
 twitter_text: 'Setup A K8S Cluster'
 introduction: 'Setup A K8S Cluster'
 ---
@@ -20,7 +20,12 @@ introduction: 'Setup A K8S Cluster'
 这里通过一次 workshop 来演示如何启动一个 K8s 集群
 
 
->**Tip:** 当前的版本为 ****
+>**Tip:** 当前的版本为 
+
+~~~
+Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.0", GitCommit:"9e991415386e4cf155a24b1da15becaa390438d8", GitTreeState:"clean", BuildDate:"2020-03-25T14:58:59Z", GoVersion:"go1.13.8", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.0", GitCommit:"9e991415386e4cf155a24b1da15becaa390438d8", GitTreeState:"clean", BuildDate:"2020-03-25T14:50:46Z", GoVersion:"go1.13.8", Compiler:"gc", Platform:"linux/amd64"}
+~~~
 
 ---
 
