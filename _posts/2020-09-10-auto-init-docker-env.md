@@ -9,7 +9,7 @@ color: '#fbbd04'
 tags:
  - snippet
  - vagrant
- - linux
+ - docker
  - devops
  - code
 categories:

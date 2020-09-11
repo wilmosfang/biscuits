@@ -11,7 +11,7 @@ tags:
  - docker
  - tools
  - vagrant
- - linux
+ - sonarqube
  - devops
  - code
 categories:
