@@ -13,6 +13,7 @@ tags:
  - vagrant
  - linux
  - devops
+ - code
 categories:
  - code
 twitter_text: "Auto install sonarqube by compose"

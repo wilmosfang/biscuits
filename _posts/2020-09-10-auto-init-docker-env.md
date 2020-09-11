@@ -11,6 +11,7 @@ tags:
  - vagrant
  - linux
  - devops
+ - code
 categories:
  - code
 twitter_text: 'Auto Init Docker env by Vagrant'
