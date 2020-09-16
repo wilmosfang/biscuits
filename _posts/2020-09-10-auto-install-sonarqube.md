@@ -10,7 +10,6 @@ tags:
  - snippet
  - docker
  - tools
- - vagrant
  - sonarqube
  - devops
  - code

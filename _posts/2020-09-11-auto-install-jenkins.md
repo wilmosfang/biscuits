@@ -10,7 +10,6 @@ tags:
  - snippet
  - docker
  - tools
- - vagrant
  - jenkins
  - devops
  - code
