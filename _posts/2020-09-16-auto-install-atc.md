@@ -99,12 +99,13 @@ Docker version 1.13.1, build 64e9980/1.13.1
 .
 ├── app.ini
 ├── docker-compose.yaml
+├── hudson.model.UpdateCenter.xml
 ├── init-atc.bash
 ├── init-sonar-db.sh
 ├── jenkins.war.2.249.1
 └── jenkins.war.2.89.3
 
-0 directories, 6 files
+0 directories, 7 files
 [root@tc atc]# cat init-atc.bash
 #!/bin/bash
 
@@ -128,7 +129,7 @@ ulimit -u 4096
 docker pull gitea/gitea:1.12.4
 docker pull jenkins:2.60.3
 docker pull sonarqube:8.4.2-community
-docker pull sonarqube:6.7.1
+#docker pull sonarqube:6.7.1
 docker pull postgres:12.4
 
 ## service up
@@ -213,6 +214,7 @@ services:
 
   jenkins:
     image: jenkins:2.60.3
+    #image: jenkins/jenkins:lts
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -221,6 +223,7 @@ services:
     restart: always
     volumes:
       - jenkins_home:/var/jenkins_home
+      - ./hudson.model.UpdateCenter.xml:/var/jenkins_home/hudson.model.UpdateCenter.xml
       - ./jenkins.war.2.249.1:/usr/share/jenkins/jenkins.war  #upgrade to jenkins.war.2.249.1
 [root@tc atc]# cat init-sonar-db.sh
 #!/bin/bash
@@ -313,10 +316,43 @@ ENABLED = false
 ENABLE_OPENID_SIGNIN = true
 ENABLE_OPENID_SIGNUP = true
 
+[root@tc atc]# cat hudson.model.UpdateCenter.xml
+<?xml version='1.1' encoding='UTF-8'?>
+<sites>
+  <site>
+    <id>default</id>
+    <url>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</url>
+  </site>
+</sites>[root@tc atc]#
+[root@tc atc]#
+[root@tc atc]#
+[root@tc atc]#
+[root@tc atc]# tree
+.
+├── app.ini
+├── docker-compose.yaml
+├── hudson.model.UpdateCenter.xml
+├── init-atc.bash
+├── init-sonar-db.sh
+├── jenkins.war.2.249.1
+└── jenkins.war.2.89.3
+
+0 directories, 7 files
 [root@tc atc]#
 ~~~
 
 
+> **Note:** 没有更新 **hudson.model.UpdateCenter.xml** 的情况下，容易在启动时，卡在 **Please wait while Jenkins is getting ready to work ...** 这一步，原因是访问 **https://updates.jenkins.io/update-center.json** 受阻，无法正常执行如下几步
+
+~~~
+2020-09-16 16:40:23.212+0000 [id=41]	INFO	h.m.DownloadService$Downloadable#load: Obtained the updated data file for hudson.tasks.Maven.MavenInstaller
+2020-09-16 16:40:23.213+0000 [id=41]	INFO	hudson.util.Retrier#start: Performed the action check updates server successfully at the attempt #1
+2020-09-16 16:40:23.215+0000 [id=41]	INFO	hudson.model.AsyncPeriodicWork#lambda$doRun$0: Finished Download metadata. 6,791 ms
+2020-09-16 16:40:23.240+0000 [id=26]	INFO	jenkins.InitReactorRunner$1#onAttained: Completed initialization
+2020-09-16 16:40:23.254+0000 [id=19]	INFO	hudson.WebAppMain$3#run: Jenkins is fully up and running
+~~~
+
+解决办法是就替换这个URL地址到一个容易访问的更新中心，我们这里更新成了 **https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json**
 
 ## 执行
 
@@ -475,7 +511,7 @@ e378fb7e8db7        postgres:12.4               "docker-entrypoint..."   2 minut
 
 
 
-## 访问
+## 访问与基础配置
 
 sonarqube 的访问界面
 
@@ -492,6 +528,61 @@ gitea 的访问界面
 ![atc](/assets/img/post/2020-09-16-auto-install-atc/atc05.png)
 
 ![atc](/assets/img/post/2020-09-16-auto-install-atc/atc06.png)
+
+jenkins 的访问界面
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc07.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc08.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc09.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc10.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc11.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc12.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc13.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc14.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc15.png)
+
+![atc](/assets/img/post/2020-09-16-auto-install-atc/atc16.png)
+
+
+postgresql 的访问
+
+~~~
+[root@tc atc]# docker ps -a
+CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS                                              NAMES
+b383468b5b40        jenkins:2.60.3              "/bin/tini -- /usr..."   24 minutes ago      Up 24 minutes       0.0.0.0:8080->8080/tcp, 0.0.0.0:50000->50000/tcp   atc_jenkins_1
+123bb39154ca        gitea/gitea:1.8.3           "/usr/bin/entrypoi..."   2 hours ago         Up 40 minutes       0.0.0.0:3000->3000/tcp, 0.0.0.0:10022->22/tcp      atc_gitea_1
+e378fb7e8db7        postgres:12.4               "docker-entrypoint..."   2 hours ago         Up 40 minutes       5432/tcp                                           atc_db_1
+7fc44572e532        sonarqube:8.4.2-community   "bin/run.sh bin/so..."   2 hours ago         Up 40 minutes       0.0.0.0:9000->9000/tcp                             atc_sonarqube_1
+[root@tc atc]# docker exec -it e378fb7e8db7 psql -U pguser -h db -d gitea
+Password for user pguser:
+psql (12.4 (Debian 12.4-1.pgdg100+1))
+Type "help" for help.
+
+gitea=# \l
+                              List of databases
+   Name    | Owner  | Encoding |  Collate   |   Ctype    | Access privileges
+-----------+--------+----------+------------+------------+-------------------
+ gitea     | pguser | UTF8     | en_US.utf8 | en_US.utf8 |
+ postgres  | pguser | UTF8     | en_US.utf8 | en_US.utf8 |
+ sonar     | pguser | UTF8     | en_US.utf8 | en_US.utf8 | =Tc/pguser       +
+           |        |          |            |            | pguser=CTc/pguser
+ template0 | pguser | UTF8     | en_US.utf8 | en_US.utf8 | =c/pguser        +
+           |        |          |            |            | pguser=CTc/pguser
+ template1 | pguser | UTF8     | en_US.utf8 | en_US.utf8 | =c/pguser        +
+           |        |          |            |            | pguser=CTc/pguser
+(5 rows)
+
+gitea=# exit
+[root@tc atc]#
+~~~
 
 
 ---
