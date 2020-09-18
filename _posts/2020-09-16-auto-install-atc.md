@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Auto install ATC by compose"
-date: 2020-09-11 04:37:42
+date: 2020-09-16 04:37:42
 image: '/assets/img/'
 description: '自动安装敏捷工具链'
 main-class: 'code'

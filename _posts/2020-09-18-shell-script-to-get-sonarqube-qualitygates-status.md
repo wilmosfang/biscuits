@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Get Sonarqube Gualitygate status by Shell"
-date: 2020-09-11 04:37:42
+date: 2020-09-18 01:37:42
 image: '/assets/img/'
 description: '通过脚本自动获取sonarqube质量门禁结果'
 main-class: 'code'
