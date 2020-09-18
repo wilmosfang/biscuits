@@ -327,6 +327,8 @@ stage("Quality Gate"){
 
 来应用之前定义的 task 以完成状态的检查和判断，中断 pipeline 的运行
 
+> **Tip:** 这里有两个文件都可以定义, 在扫描过程中将报告内容发到 Sonar 的哪个项目中, 一个 **`settings.gradle`** 一个是 **`sonar-project.properties`**, 区别在哪里呢, 当通过 **`gradle sonarqube`** 来扫描时是从前者获取的配置信息, 当直接通过 **`sonar-scanner`** 插件来扫描时是是从后者获取的配置信息
+
 ## 执行
 
 这里我先使用 report **`/tmp/report-task.txt`** 替换实际生产中的 **`.scannerwork/report-task.txt`** 进行一个本地的测试
