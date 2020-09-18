@@ -259,7 +259,73 @@ node{
 [root@jenkins tdd_in_jenkins]#
 ~~~
 
+> **Tip:** 这个代码片段中关键的是如下两部分
 
+在 build.gradle 中
+
+~~~
+def getHttpDate(String url){
+    def connection = new URL(url).openConnection()
+    def jsonSluper = new groovy.json.JsonSlurper()
+    connection.setRequestMethod('GET')
+    connection.connect()
+    def response = connection.content.text
+    return jsonSluper.parseText(response)
+}
+
+project.task('checkSonarqubeQualitygate',group:'Verification',description:'Get quality gate status from SonarQube').doLast {
+    def COUNT = 3
+    def INTERVAL = 10
+    def REPORT_PATH = '.scannerwork/report-task.txt'
+//    def REPORT_PATH = '/tmp/report-task.txt'
+    def project_status_api = 'api/qualitygates/project_status'
+    def task_status_url = ''
+    def server_url = ''
+
+    File report = new File(REPORT_PATH)
+    report.eachLine {
+        println it
+        if (it.contains('ceTaskUrl')) task_status_url = it - 'ceTaskUrl='
+        if (it.contains('serverUrl')) server_url = it - 'serverUrl='
+    }
+
+    for(int i = 1; i <= COUNT; i++){
+        def task_status = getHttpDate(task_status_url).task.status
+        if ( task_status == 'SUCCESS'){
+            break
+        }
+        else
+        {
+            sleep(INTERVAL*1000)
+            println "retry "+i
+        }
+    }
+
+    def analysisId = getHttpDate(task_status_url).task.analysisId
+    def project_status_url = server_url+'/'+project_status_api+'?analysisId='+analysisId
+    def project_status = getHttpDate(project_status_url).projectStatus.status
+
+    if ( project_status == 'OK'){
+        println "project_status is: " + project_status
+    }
+    else
+    {
+        throw new Exception("project_status is: " + project_status);
+    }
+}
+~~~
+
+用于定义一个叫 checkSonarqubeQualitygate 的 task 来完成自动检查状态的工作
+
+在 Jenkinsfile.groovy 中
+
+~~~
+stage("Quality Gate"){
+        sh "${tool 'Gradle 5.2.1'}/bin/gradle checkSonarqubeQualitygate"
+    }
+~~~
+
+来应用之前定义的 task 以完成状态的检查和判断，中断 pipeline 的运行
 
 ## 执行
 
@@ -284,6 +350,12 @@ BUILD SUCCESSFUL in 0s
 
 > **Tip:** 可以定制重试次数 **`COUNT`**, 重试间隔 **`INTERVAL`**, 指定报告路径 **`REPORT_PATH`**
  
+
+
+
+>**Tip:** groovy 有自带的 **URL** 来进行 HTTP 请求, 也有自带的 **JsonSlurper** 解析 json, 因此没有过多的外部依赖
+
+
 参考的逻辑如下：
 
 **https://docs.sonarqube.org/display/SONARQUBE53/Breaking+the+CI+Build**
@@ -315,7 +387,6 @@ c. SUCCESS - move forward
 
 **https://next.sonarqube.com/sonarqube/web_api/api/qualitygates**
 
->**Tip:** groovy 有自带的 **URL** 来进行 HTTP 请求, 也有自带的 **JsonSlurper** 解析 json, 因此没有过多的外部依赖
 
 提交到 Jenkins 中看看执行效果
 
@@ -355,14 +426,14 @@ BUILD SUCCESSFUL in 11s
 Finished: SUCCESS
 ~~~
 
-通过 **`retry 1`** 这个信息, 我们知道由于 task 状态不 ready，我们重试过一次
+通过 **`retry 1`** 这个信息, 我们知道由于 task 状态不 ready，自动重试过一次
 
 
 ---
 
 # 总结
 
-直接在 gradle 中通过 groovy 代码来完成一些 task 可以简化一些操作
+直接在 gradle 中通过 groovy 代码来完成一些 task 可以简化一些依赖
 
 例如
 
@@ -372,6 +443,7 @@ stage("Quality Gate"){
     }
 ~~~
 
+后面可以演示如何通过 Jenkins 的插件来完成此检查工作
 
 * TOC
 {:toc}
