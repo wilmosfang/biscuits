@@ -8,7 +8,7 @@ main-class: 'code'
 color: '#fbbd04' 
 tags:
  - snippet
- - traefic
+ - traefik
  - code
 categories:
  - code
